@@ -1,0 +1,482 @@
+/* ============================================================
+   Relaciones JPA · Club de fútbol
+   Estilos de la interfaz. Fondos SVG originales (img/), efecto
+   de vidrio, tema claro y oscuro (prefers-color-scheme), y
+   respeto de prefers-reduced-motion. Sin recursos externos.
+   ============================================================ */
+
+:root {
+	--fondo: #f6f7f9;
+	--superficie: #ffffff;
+	--texto: #1e2430;
+	--texto-suave: #5b6472;
+	--borde: rgba(30, 41, 60, 0.16);
+	--acento: #2f6fed;
+	--acento-suave: #eaf1ff;
+	--acento-texto: #ffffff;
+	--peligro: #c23a3a;
+	--peligro-suave: #fdeeee;
+	--exito: #1e7b33;
+	--exito-suave: #eaf6ec;
+	--sombra: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.10);
+	--sombra-flotante: 0 10px 30px rgba(16, 24, 40, 0.18);
+	--radio: 10px;
+
+	/* Acento propio de cada pestaña */
+	--acc-clubes: #2e7d32;
+	--acc-asociaciones: #6a4fb3;
+	--acc-entrenadores: #0e7c86;
+	--acc-jugadores: #b0621b;
+	--acc-competiciones: #2b5ea7;
+
+	/* Vidrio: superficie translúcida con desenfoque del fondo */
+	--vidrio: rgba(255, 255, 255, 0.78);
+	--vidrio-borde: rgba(255, 255, 255, 0.70);
+	--vidrio-input: rgba(255, 255, 255, 0.88);
+	--vidrio-linea: rgba(30, 41, 60, 0.14);
+
+	/* Capas sobre los SVG de fondo para asegurar el contraste */
+	--capa-1: rgba(255, 255, 255, 0.82);
+	--capa-2: rgba(255, 255, 255, 0.93);
+	/* Capa del hero (encima del estadio nocturno) */
+	--hero-capa-1: rgba(9, 14, 26, 0.55);
+	--hero-capa-2: rgba(9, 14, 26, 0.78);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--fondo: #141922;
+		--superficie: #1d232e;
+		--texto: #e8ebf1;
+		--texto-suave: #a2abba;
+		--borde: rgba(200, 214, 235, 0.18);
+		--acento: #6c9bff;
+		--acento-suave: #233047;
+		--acento-texto: #0d1117;
+		--peligro: #e07c7c;
+		--peligro-suave: #3a2323;
+		--exito: #7ed492;
+		--exito-suave: #1e3325;
+		--sombra: 0 1px 3px rgba(0, 0, 0, 0.45);
+		--sombra-flotante: 0 12px 32px rgba(0, 0, 0, 0.55);
+
+		--acc-clubes: #86d98c;
+		--acc-asociaciones: #b39aff;
+		--acc-entrenadores: #66c7d1;
+		--acc-jugadores: #f0a35e;
+		--acc-competiciones: #8ab0f0;
+
+		--vidrio: rgba(22, 28, 39, 0.78);
+		--vidrio-borde: rgba(200, 214, 235, 0.16);
+		--vidrio-input: rgba(16, 21, 30, 0.92);
+		--vidrio-linea: rgba(200, 214, 235, 0.16);
+
+		--capa-1: rgba(10, 14, 22, 0.82);
+		--capa-2: rgba(10, 14, 22, 0.94);
+		--hero-capa-1: rgba(9, 14, 26, 0.62);
+		--hero-capa-2: rgba(9, 14, 26, 0.85);
+	}
+}
+
+* { box-sizing: border-box; }
+
+body {
+	margin: 0;
+	color: var(--texto);
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	line-height: 1.5;
+	/* Fondo general: campo.svg a pantalla completa bajo una capa translúcida,
+	   para que el texto conserve contraste en ambos temas. */
+	background:
+		linear-gradient(180deg, var(--capa-1), var(--capa-2)),
+		url("../img/campo.svg") center / cover no-repeat;
+	background-attachment: fixed, fixed;
+}
+
+/* ---------- Cabecera hero: estadio.svg de fondo ---------- */
+.cabecera {
+	position: relative;
+	background:
+		linear-gradient(180deg, var(--hero-capa-1), var(--hero-capa-2)),
+		url("../img/estadio.svg") center / 1600px 900px no-repeat;
+	background-size: cover, cover;
+	color: #ffffff;
+	padding: 40px 24px 0;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+.hero-linea {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+.balon { flex: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4)); }
+.titulo { margin: 10px 0 6px; font-size: 1.6rem; font-weight: 700; letter-spacing: 0.01em; }
+.hero-subtitulo {
+	margin: 0 0 20px;
+	max-width: 62ch;
+	color: #e9edf4;			 /* ^15:1 sobre la capa oscura del hero */
+	font-size: 0.98rem;
+}
+
+/* Barra de pestañas de vidrio, apoyada sobre el borde inferior del hero */
+.pestanas {
+	display: flex;
+	gap: 4px;
+	flex-wrap: wrap;
+	width: fit-content;
+	max-width: 100%;
+	padding: 0 8px;
+	background: rgba(9, 14, 24, 0.40);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	border-bottom: none;
+	border-radius: 12px 12px 0 0;
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+}
+.pestana {
+	appearance: none;
+	border: none;
+	border-bottom: 3px solid transparent;
+	background: transparent;
+	color: rgba(255, 255, 255, 0.88);
+	font: inherit;
+	padding: 11px 14px 8px;
+	cursor: pointer;
+	transition: color 0.15s ease, opacity 0.15s ease;
+}
+.pestana:hover { color: #ffffff; }
+.pestana.activa {
+	color: #ffffff;
+	font-weight: 600;
+}
+/* Acento de la pestaña activa según sección */
+.pestana[data-tab="clubes"].activa { border-bottom-color: var(--acc-clubes); }
+.pestana[data-tab="asociaciones"].activa { border-bottom-color: var(--acc-asociaciones); }
+.pestana[data-tab="entrenadores"].activa { border-bottom-color: var(--acc-entrenadores); }
+.pestana[data-tab="jugadores"].activa { border-bottom-color: var(--acc-jugadores); }
+.pestana[data-tab="competiciones"].activa { border-bottom-color: var(--acc-competiciones); }
+
+/* ---------- Contenido ---------- */
+.contenido { max-width: 1100px; margin: 0 auto; padding: 22px 20px 60px; }
+.panel { display: none; }
+.panel.visible { display: block; }
+
+.barra-superior {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	flex-wrap: wrap;
+	margin-bottom: 16px;
+}
+.barra-superior h2 { margin: 0; font-size: 1.15rem; }
+
+/* Acento sutil y distinto por sección, en el título del panel */
+#panel-clubes .barra-superior h2 { border-left: 5px solid var(--acc-clubes); padding-left: 10px; }
+#panel-asociaciones .barra-superior h2 { border-left: 5px solid var(--acc-asociaciones); padding-left: 10px; }
+#panel-entrenadores .barra-superior h2 { border-left: 5px solid var(--acc-entrenadores); padding-left: 10px; }
+#panel-jugadores .barra-superior h2 { border-left: 5px solid var(--acc-jugadores); padding-left: 10px; }
+#panel-competiciones .barra-superior h2 { border-left: 5px solid var(--acc-competiciones); padding-left: 10px; }
+
+/* ---------- Botones ---------- */
+.boton {
+	font: inherit;
+	padding: 8px 14px;
+	border-radius: 8px;
+	border: 1px solid var(--borde);
+	background: var(--vidrio-input);
+	color: var(--texto);
+	cursor: pointer;
+	transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.boton:hover { background: var(--superficie); transform: translateY(-1px); }
+.boton.principal {
+	background: var(--acento);
+	border-color: var(--acento);
+	color: var(--acento-texto);
+	font-weight: 600;
+}
+.boton.principal:hover { filter: brightness(0.95); }
+.boton.peligro {
+	background: var(--peligro-suave);
+	border-color: var(--peligro);
+	color: var(--peligro);
+	font-weight: 600;
+}
+.boton.mini {
+	padding: 4px 10px;
+	font-size: 0.82rem;
+	border-radius: 7px;
+}
+.boton:disabled { opacity: 0.6; cursor: not-allowed; }
+.boton:focus-visible, .pestana:focus-visible {
+	outline: 2px solid var(--acento);
+	outline-offset: 2px;
+}
+
+/* ---------- Indicador de carga ---------- */
+.cargando {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: var(--texto-suave);
+	padding: 12px 0 18px;
+	font-size: 0.95rem;
+}
+.girando {
+	width: 16px; height: 16px;
+	border: 2px solid var(--borde);
+	border-top-color: var(--acento);
+	border-radius: 50%;
+	animation: girar 0.8s linear infinite;
+}
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* ---------- Estado vacío (vidrio) ---------- */
+.vacio {
+	background: var(--vidrio);
+	border: 1px dashed var(--borde);
+	border-radius: var(--radio);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	color: var(--texto-suave);
+	text-align: center;
+	padding: 34px 16px;
+}
+
+/* ---------- Tarjeta de club (vidrio + franja decorativa) ---------- */
+.rejilla {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 16px;
+}
+.tarjeta {
+	position: relative;
+	background: var(--vidrio);
+	border: 1px solid var(--vidrio-borde);
+	border-radius: var(--radio);
+	box-shadow: var(--sombra);
+	backdrop-filter: blur(10px) saturate(1.05);
+	-webkit-backdrop-filter: blur(10px) saturate(1.05);
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.tarjeta:hover {
+	transform: translateY(-3px);
+	box-shadow: var(--sombra-flotante);
+}
+/* Franja decorativa superior con el patrón SVG */
+.tarjeta::before {
+	content: "";
+	display: block;
+	height: 10px;
+	margin: -16px -16px 14px;
+	border-radius: var(--radio) var(--radio) 0 0;
+	background-color: var(--acc-clubes);
+	background-image: url("../img/patron.svg");
+	background-size: 40px 40px;
+}
+.tarjeta-cabecera {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 8px;
+}
+.tarjeta-cabecera h3 { margin: 0; font-size: 1.05rem; }
+
+.bloque {
+	border-top: 1px solid var(--vidrio-linea);
+	padding-top: 8px;
+}
+.bloque-titulo {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: var(--texto-suave);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	margin-bottom: 4px;
+}
+/* Etiqueta discreta con la relación JPA del bloque */
+.relacion {
+	font-size: 0.66rem;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	text-transform: none;
+	background: var(--acento-suave);
+	color: var(--acento);
+	border-radius: 999px;
+	padding: 1px 8px;
+}
+.valor { margin: 0; font-size: 0.93rem; }
+.valor.suave { color: var(--texto-suave); font-style: italic; }
+
+/* Jugadores (OneToMany) */
+.lista-jugadores { list-style: none; margin: 0; padding: 0; }
+.lista-jugadores li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+	padding: 4px 0;
+	font-size: 0.92rem;
+}
+.lista-jugadores .datos {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.lista-jugadores .pos { color: var(--texto-suave); }
+.lista-jugadores .suave { color: var(--texto-suave); font-style: italic; }
+
+/* Competiciones (ManyToMany) como etiquetas */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+	background: var(--acento-suave);
+	color: var(--acento);
+	border-radius: 999px;
+	padding: 2px 10px;
+	font-size: 0.8rem;
+	white-space: nowrap;
+}
+.tarjeta-pie {
+	display: flex;
+	justify-content: space-between;
+	gap: 8px;
+	flex-wrap: wrap;
+	border-top: 1px solid var(--vidrio-linea);
+	padding-top: 10px;
+	margin-top: auto;
+}
+.acciones { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- Tablas (vidrio) ---------- */
+.tabla-envoltura {
+	background: var(--vidrio);
+	border: 1px solid var(--vidrio-borde);
+	border-radius: var(--radio);
+	box-shadow: var(--sombra);
+	backdrop-filter: blur(10px) saturate(1.05);
+	-webkit-backdrop-filter: blur(10px) saturate(1.05);
+	overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; min-width: 560px; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--vidrio-linea); }
+th {
+	font-size: 0.78rem;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--texto-suave);
+}
+td { font-size: 0.93rem; }
+tbody tr:last-child td { border-bottom: none; }
+.col-acciones { text-align: right; }
+.acciones-tabla { display: flex; gap: 6px; justify-content: flex-end; }
+
+/* ---------- Modales (vidrio) ---------- */
+.modal {
+	background: var(--vidrio);
+	color: var(--texto);
+	border: 1px solid var(--vidrio-borde);
+	border-radius: var(--radio);
+	box-shadow: var(--sombra-flotante);
+	backdrop-filter: blur(14px) saturate(1.05);
+	-webkit-backdrop-filter: blur(14px) saturate(1.05);
+	padding: 20px;
+	width: min(480px, calc(100vw - 32px));
+}
+.modal::backdrop {
+	background: rgba(10, 14, 20, 0.45);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+}
+.modal h3 { margin: 0 0 14px; font-size: 1.05rem; }
+.modal p { margin: 0 0 14px; }
+.campos { display: flex; flex-direction: column; gap: 12px; }
+.campo label {
+	display: block;
+	font-size: 0.84rem;
+	color: var(--texto-suave);
+	margin-bottom: 4px;
+}
+.campo input[type="text"], .campo input[type="number"], .campo input[type="date"], .campo select {
+	width: 100%;
+	font: inherit;
+	padding: 8px 10px;
+	border: 1px solid var(--borde);
+	border-radius: 8px;
+	background: var(--vidrio-input);
+	color: var(--texto);
+}
+.campo input:focus, .campo select:focus { outline: 2px solid var(--acento); outline-offset: 0; border-color: var(--acento); }
+.casillas { display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; }
+.casilla label {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font: inherit;
+	font-size: 0.92rem;
+	color: var(--texto);
+	margin: 0;
+}
+.pie-modal {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 18px;
+}
+
+/* ---------- Toast (vidrio) ---------- */
+.toast {
+	position: fixed;
+	left: 50%;
+	bottom: 24px;
+	transform: translateX(-50%);
+	max-width: min(560px, calc(100vw - 32px));
+	padding: 12px 18px;
+	border-radius: 10px;
+	font-size: 0.92rem;
+	box-shadow: var(--sombra-flotante);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	z-index: 20;
+}
+.toast.info { background: var(--vidrio); color: var(--texto); border: 1px solid var(--vidrio-borde); }
+.toast.ok { background: var(--exito-suave); color: var(--exito); border: 1px solid var(--exito); }
+.toast.error { background: var(--peligro-suave); color: var(--peligro); border: 1px solid var(--peligro); }
+
+/* ---------- Utilidades ---------- */
+.oculto { display: none !important; }
+
+/* ---------- Animaciones (solo si el usuario no pide reducirlas) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+	.tarjeta { animation: aparecer 0.25s ease-out both; }
+	@keyframes aparecer {
+		from { opacity: 0; transform: translateY(6px); }
+		to { opacity: 1; transform: none; }
+	}
+}
+/* Sin animaciones ni transiciones si el usuario prefiere movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		animation: none !important;
+		transition: none !important;
+	}
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 560px) {
+	.cabecera { padding: 26px 14px 0; }
+	.titulo { font-size: 1.25rem; }
+	.hero-linea img { width: 34px; height: 34px; }
+	.hero-subtitulo { font-size: 0.92rem; }
+	.contenido { padding: 16px 12px 50px; }
+	.barra-superior { flex-direction: column; align-items: flex-start; }
+	.rejilla { grid-template-columns: 1fr; }	/* tarjetas en una columna */
+	.pestanas { flex-wrap: nowrap; overflow-x: auto; width: auto; }
+}

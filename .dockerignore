@@ -1,0 +1,12 @@
+target/
+data/
+ejecutable/
+.git/
+.gitattributes
+.settings/
+.classpath
+.project
+*.md
+!README.md
+Dockerfile
+.dockerignore

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Campo de fútbol: vista cenital estilizada (fondo general de la página).
+     Original, sin marcas reales. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+	<defs>
+		<radialGradient id="cesped" cx="50%" cy="42%" r="80%">
+			<stop offset="0" stop-color="#57a65a"/>
+			<stop offset="0.55" stop-color="#45894a"/>
+			<stop offset="1" stop-color="#35693b"/>
+		</radialGradient>
+	</defs>
+
+	<!-- Base de césped con iluminación suave -->
+	<rect width="1200" height="800" fill="url(#cesped)"/>
+
+	<!-- Franjas alternadas de corte de césped -->
+	<g fill="#ffffff" opacity="0.06">
+		<rect x="0" y="0" width="150" height="800"/>
+		<rect x="300" y="0" width="150" height="800"/>
+		<rect x="600" y="0" width="150" height="800"/>
+		<rect x="900" y="0" width="150" height="800"/>
+	</g>
+
+	<!-- Líneas del terreno de juego -->
+	<g fill="none" stroke="#ffffff" stroke-opacity="0.85" stroke-width="4">
+		<!-- Perímetro -->
+		<rect x="60" y="60" width="1080" height="680" stroke-width="5"/>
+		<!-- Línea media, círculo central -->
+		<line x1="600" y1="60" x2="600" y2="740"/>
+		<circle cx="600" cy="400" r="92"/>
+		<!-- Áreas y arcos de penalti (izquierda) -->
+		<rect x="60" y="230" width="150" height="340"/>
+		<rect x="60" y="320" width="60" height="160"/>
+		<path d="M210 348 A88 88 0 0 1 210 452"/>
+		<!-- Áreas y arcos de penalti (derecha) -->
+		<rect x="990" y="230" width="150" height="340"/>
+		<rect x="1080" y="320" width="60" height="160"/>
+		<path d="M990 348 A88 88 0 0 0 990 452"/>
+	</g>
+
+	<!-- Puntos: central y de penalti -->
+	<g fill="#ffffff" fill-opacity="0.85">
+		<circle cx="600" cy="400" r="6"/>
+		<circle cx="160" cy="400" r="5"/>
+		<circle cx="1040" cy="400" r="5"/>
+	</g>
+
+	<!-- Arcos de córner -->
+	<g fill="none" stroke="#ffffff" stroke-opacity="0.85" stroke-width="4">
+		<path d="M60 96 A36 36 0 0 0 96 60"/>
+		<path d="M1104 60 A36 36 0 0 0 1140 96"/>
+		<path d="M1140 704 A36 36 0 0 0 1104 740"/>
+		<path d="M96 740 A36 36 0 0 0 60 704"/>
+	</g>
+</svg>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Relaciones JPA · Club de fútbol</title>
+	<link rel="icon" href="img/balon.svg" type="image/svg+xml">
+	<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+<header class="cabecera">
+	<div class="hero-linea">
+		<img class="balon" src="img/balon.svg" alt="" width="42" height="42" aria-hidden="true">
+		<h1 class="titulo">Relaciones JPA · Club de fútbol</h1>
+	</div>
+	<p class="hero-subtitulo">Un club de fútbol como modelo: cuatro relaciones JPA detrás de una API REST.</p>
+	<nav class="pestanas" aria-label="Secciones">
+		<button type="button" class="pestana activa" data-tab="clubes">Clubes</button>
+		<button type="button" class="pestana" data-tab="asociaciones">Asociaciones</button>
+		<button type="button" class="pestana" data-tab="entrenadores">Entrenadores</button>
+		<button type="button" class="pestana" data-tab="jugadores">Jugadores</button>
+		<button type="button" class="pestana" data-tab="competiciones">Competiciones</button>
+	</nav>
+</header>
+
+<main class="contenido">
+
+	<!-- Indicador de carga global (visible mientras dura una petición) -->
+	<div id="cargando" class="cargando oculto" role="status" aria-live="polite">
+		<span class="girando" aria-hidden="true"></span> Cargando…
+	</div>
+
+	<!-- ================= Pestaña Clubes (tarjetas) ================= -->
+	<section id="panel-clubes" class="panel visible">
+		<div class="barra-superior">
+			<h2>Clubes</h2>
+			<button type="button" id="btn-nuevo-club" class="boton principal">+ Nuevo club</button>
+		</div>
+		<div id="contenedor-clubes" class="rejilla"></div>
+		<p id="vacio-clubes" class="vacio oculto">
+			No hay clubes todavía. Crea el primero con «Nuevo club».
+		</p>
+	</section>
+
+	<!-- ================= Pestaña Asociaciones (tabla) ================= -->
+	<section id="panel-asociaciones" class="panel">
+		<div class="barra-superior">
+			<h2>Asociaciones</h2>
+			<button type="button" class="boton principal" data-nuevo="asociaciones">+ Nueva asociación</button>
+		</div>
+		<div class="tabla-envoltura">
+			<table>
+				<thead>
+					<tr><th>ID</th><th>Nombre</th><th>País</th><th>Presidente</th><th class="col-acciones">Acciones</th></tr>
+				</thead>
+				<tbody id="tbody-asociaciones"></tbody>
+			</table>
+		</div>
+		<p id="vacio-asociaciones" class="vacio oculto">No hay asociaciones todavía.</p>
+	</section>
+
+	<!-- ================= Pestaña Entrenadores (tabla) ================= -->
+	<section id="panel-entrenadores" class="panel">
+		<div class="barra-superior">
+			<h2>Entrenadores</h2>
+			<button type="button" class="boton principal" data-nuevo="entrenadores">+ Nuevo entrenador</button>
+		</div>
+		<div class="tabla-envoltura">
+			<table>
+				<thead>
+					<tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Edad</th><th>Nacionalidad</th><th class="col-acciones">Acciones</th></tr>
+				</thead>
+				<tbody id="tbody-entrenadores"></tbody>
+			</table>
+		</div>
+		<p id="vacio-entrenadores" class="vacio oculto">No hay entrenadores todavía.</p>
+	</section>
+
+	<!-- ================= Pestaña Jugadores (tabla) ================= -->
+	<section id="panel-jugadores" class="panel">
+		<div class="barra-superior">
+			<h2>Jugadores</h2>
+			<button type="button" class="boton principal" data-nuevo="jugadores">+ Nuevo jugador</button>
+		</div>
+		<div class="tabla-envoltura">
+			<table>
+				<thead>
+					<tr><th>ID</th><th>Número</th><th>Nombre</th><th>Apellido</th><th>Posición</th><th class="col-acciones">Acciones</th></tr>
+				</thead>
+				<tbody id="tbody-jugadores"></tbody>
+			</table>
+		</div>
+		<p id="vacio-jugadores" class="vacio oculto">No hay jugadores todavía.</p>
+	</section>
+
+	<!-- ================= Pestaña Competiciones (tabla) ================= -->
+	<section id="panel-competiciones" class="panel">
+		<div class="barra-superior">
+			<h2>Competiciones</h2>
+			<button type="button" class="boton principal" data-nuevo="competiciones">+ Nueva competición</button>
+		</div>
+		<div class="tabla-envoltura">
+			<table>
+				<thead>
+					<tr><th>ID</th><th>Nombre</th><th>Monto del premio</th><th>Fecha inicio</th><th>Fecha fin</th><th class="col-acciones">Acciones</th></tr>
+				</thead>
+				<tbody id="tbody-competiciones"></tbody>
+			</table>
+		</div>
+		<p id="vacio-competiciones" class="vacio oculto">No hay competiciones todavía.</p>
+	</section>
+
+</main>
+
+<!-- Modal genérico de formulario (create/edit) -->
+<dialog id="dialogo-formulario" class="modal">
+	<form id="formulario" novalidate>
+		<h3 id="titulo-formulario">Formulario</h3>
+		<div id="campos-formulario" class="campos"></div>
+		<div class="pie-modal">
+			<button type="button" id="btn-cancelar-form" class="boton">Cancelar</button>
+			<button type="submit" id="btn-guardar-form" class="boton principal">Guardar</button>
+		</div>
+	</form>
+</dialog>
+
+<!-- Modal de confirmación para eliminar -->
+<dialog id="dialogo-confirmar" class="modal">
+	<p id="texto-confirmar">¿Eliminar el registro?</p>
+	<div class="pie-modal">
+		<button type="button" id="btn-confirmar-cancelar" class="boton">Cancelar</button>
+		<button type="button" id="btn-confirmar-eliminar" class="boton peligro">Eliminar</button>
+	</div>
+</dialog>
+
+<!-- Aviso (toast) para éxitos y errores de la API -->
+<div id="toast" class="toast oculto" role="status" aria-live="polite"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

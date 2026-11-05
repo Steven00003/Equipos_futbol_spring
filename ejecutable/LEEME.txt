@@ -1,0 +1,65 @@
+=====================================================================
+ RELACIONES JPA - CLUB DE FUTBOL
+ Version ejecutable (sin Eclipse, sin XAMPP, sin MySQL)
+=====================================================================
+
+REQUISITOS
+----------
+- Java 17 o superior instalado (por ejemplo Oracle JDK u OpenJDK 17
+  o mayor). Para comprobarlo: abre "cmd" y escribe  java -version
+- No se necesita ningún servidor de bases de datos: la app usa
+  la base de datos H2 en archivo, que se crea sola.
+
+COMO INICIAR
+------------
+- Haz doble clic en  iniciar.bat
+- Se abrira una ventana de consola con el log de la aplicacion.
+  !! CERRAR ESA VENTANA DETIENE LA APLICACION !!
+- Unos 10 segundos despues se abre en tu navegador:
+      http://localhost:8118/
+- OJO: si ya tienes la aplicacion abierta desde Eclipse (o cualquier
+  otro programa esta usando el puerto 8118), veras el error
+  "Port 8118 was already in use": cierra la otra instancia e
+  intentalo de nuevo. Cerrar esta ventana detiene la aplicacion.
+
+DONDE QUEDA LA BASE DE DATOS
+----------------------------
+- Se crea en la carpeta  data\  que aparece JUNTO A este archivo
+  (junto al iniciar.bat y al RelacionesFutbol.jar).
+- Archivo principal:  data\relacionesdb.mv.db
+
+REINICIAR LOS DATOS (volver a los datos de prueba)
+--------------------------------------------------
+1. Cierra la ventana de la aplicacion (con eso se detiene la app).
+2. Borra la carpeta  data\  con el explorador de archivos.
+3. Vuelve a hacer doble clic en  iniciar.bat: la base se crea
+   de cero y el programa inserta los datos de prueba iniciales.
+
+CONSOLA H2 (consultar la base de datos desde el navegador)
+-----------------------------------------------------------
+- URL de la consola:  http://localhost:8118/h2-console
+- JDBC URL:           jdbc:h2:file:./data/relacionesdb
+- Usuario:            sa
+- Contrasena:         (vacia, dejar en blanco)
+- Escribe esa JDBC URL exacta en el formulario de la consola y
+  pulsa "Connect"; veras las tablas (clubes, jugadores, etc.).
+
+DATOS TECNICOS
+--------------
+- Puerto de la aplicacion: 8118
+- Jar ejecutable:          RelacionesFutbol.jar
+- Alternativa por linea de comandos:
+      cd ejecutable
+      java -jar RelacionesFutbol.jar
+
+OPCION: VERSION .EXE (con Java incluido, para instalar sin nada)
+---------------------------------------------------------------
+- En la carpeta  exe\RelacionesFutbol\  hay un RelacionesFutbol.exe
+  generado con jpackage (JDK 25) que incluye su propio Java en
+  runtime\, con lo que no haria falta tener Java instalado.
+- AVISO: esta version .exe se genero pero NO llego a validarse en
+  esta maquina (durante la prueba el proceso no llego a abrir el
+  puerto y termino sin mensaje de error utilizable). Si la necesitas,
+  empieza por el doble clic en  iniciar.bat  (via java -jar), que si
+  se probo y funciona; y prueba el .exe por tu cuenta cuando quieras.
+=====================================================================
